@@ -1,0 +1,23 @@
+import string
+from collections import Counter
+
+def word_analysis(text):
+  text=text.lower()
+  text=text.translate(str.maketrans('','',string.punctuation))
+  words=text.split()
+  stop_words={"the","is","in","and","to","of","a","for"}
+  filtered_words=[word for word in words if word not in stop_words]
+  total_words=len(filtered_words)
+  unique_words=set(filtered_words)
+  word_count=Counter(filtered_words)
+
+  print("Total words(excluding stop words):",total_words)
+  print("Number of unique words:",len(unique_words))
+  print("\n Top 5 Most frequency words:")
+  for word,freq in word_count.most_common(5):
+    print(f"{word}:{freq}")
+
+text_input="""
+textssss....
+  """
+word_analysis(text_input)

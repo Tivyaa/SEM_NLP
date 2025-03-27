@@ -1,0 +1,26 @@
+import nltk
+from nltk import word_tokenize, pos_tag
+from nltk.chunk import RegexpParser
+
+# Download the necessary NLTK data
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('averaged_perceptron_tagger_eng')
+
+sentence = "The quick brown fox jumped over the lazy dog"
+tokens = word_tokenize(sentence)
+tagged = pos_tag(tokens)
+
+grammar = r"""
+    NP: {<DT>?<JJ>*<NN.*>}
+    VP: {<VB.*><NP|PP>*}
+    PP: {<IN><NP>}
+"""
+
+chunk_parser = RegexpParser(grammar)
+
+chunked = chunk_parser.parse(tagged)
+
+print("Chunked Output:")
+
+chunked.pretty_print()

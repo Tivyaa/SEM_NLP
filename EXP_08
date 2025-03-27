@@ -1,0 +1,28 @@
+import nltk
+from nltk.corpus import treebank
+from nltk.tag import UnigramTagger, BigramTagger, TrigramTagger
+from nltk.tag.sequential import ClassifierBasedPOSTagger
+from nltk.classify import NaiveBayesClassifier
+
+nltk.download('treebank')
+nltk.download('punkt')
+nltk.download('universal_tagset')
+# Download the punkt_tab resource
+nltk.download('punkt_tab') 
+
+corpus = treebank.tagged_sents(tagset='universal')
+
+train_data = corpus[:3000]
+test_data = corpus[3000:]
+
+nb_tagger = ClassifierBasedPOSTagger(train=train_data, classifier_builder=NaiveBayesClassifier.train)
+
+accuracy = nb_tagger.evaluate(test_data)
+print(f"Tagger Accuracy: {accuracy * 100:.2f}%")
+
+sentence = "The quick brown fox jumps over the lazy dog"
+tokens = nltk.word_tokenize(sentence)
+tags = nb_tagger.tag(tokens)
+
+print("\nPOS Tags:")
+print(tags)

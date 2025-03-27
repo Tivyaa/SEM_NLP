@@ -1,0 +1,28 @@
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.util import ngrams
+from collections import Counter
+
+nltk.download('punkt')
+
+text = "Natural Language Processing (NLP) enables machines to understand human language."
+tokens = word_tokenize(text)
+
+def generate_ngrams(tokens, n):
+    return list(ngrams(tokens, n))
+
+unigram = generate_ngrams(tokens, 1)
+bigram = generate_ngrams(tokens, 2)
+trigram = generate_ngrams(tokens, 3)
+
+print("Unigram:")
+for gram, freq in Counter(unigram).items():
+    print(f"{gram}: {freq}")
+
+print("\nBigram:")
+for gram, freq in Counter(bigram).items():
+    print(f"{gram}: {freq}")
+
+print("\nTrigram:")
+for gram, freq in Counter(trigram).items():
+    print(f"{gram}: {freq}")
